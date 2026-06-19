@@ -135,16 +135,22 @@ body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);
 .food-section .sec-title{color:var(--cream)}
 .food-section .eyebrow{color:var(--gold)}
 .food-section .gold-bar{background:var(--gold)}
-.food-masonry{columns:2;column-gap:3px;padding:0 0 0 0;margin-top:0}
-.food-tile{break-inside:avoid;position:relative;overflow:hidden;margin-bottom:3px;cursor:default;-webkit-tap-highlight-color:transparent}
-.food-tile img{width:100%;display:block;transition:transform .5s ease;vertical-align:bottom}
-.food-tile:active img{transform:scale(1.03)}
-.food-tile-label{position:absolute;bottom:0;left:0;right:0;padding:28px 10px 10px;background:linear-gradient(to top,rgba(10,18,12,.75),transparent);opacity:0;transition:opacity .3s ease}
-.food-tile:hover .food-tile-label,.food-tile:active .food-tile-label{opacity:1}
-.food-tile-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--cream);display:block}
-.food-tile.tall img{height:260px;object-fit:cover;width:100%}
-.food-tile.short img{height:160px;object-fit:cover;width:100%}
-.food-tile.med img{height:200px;object-fit:cover;width:100%}
+.food-slideshow{position:relative;width:100%;height:88vw;max-height:520px;overflow:hidden;background:var(--forest);margin-top:8px}
+.food-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+.food-slide.active{opacity:1}
+.food-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.food-slide-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,18,12,.75) 0%,rgba(10,18,12,.1) 50%,transparent 100%)}
+.food-slide-caption{position:absolute;bottom:0;left:0;right:0;padding:40px 28px 28px}
+.food-slide-viet{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(24px,6vw,38px);color:var(--cream);display:block;line-height:1.2;margin-bottom:4px}
+.food-slide-num{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.25em;color:rgba(245,240,232,.35)}
+.food-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0}
+.food-dots{display:flex;gap:6px;align-items:center}
+.food-dot{width:16px;height:2px;background:rgba(245,240,232,.2);border:none;cursor:pointer;padding:0;transition:all .3s ease;-webkit-tap-highlight-color:transparent}
+.food-dot.active{width:28px;background:var(--gold)}
+.food-arrows{display:flex;gap:10px}
+.food-arrow{width:36px;height:36px;border-radius:50%;border:1px solid rgba(245,240,232,.18);background:transparent;color:var(--cream);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s ease;-webkit-tap-highlight-color:transparent}
+.food-arrow:active{background:rgba(200,169,110,.2);border-color:var(--gold)}
+
 
 /* BUDGET */
 .budget-section{background:var(--cream);padding-bottom:0}
@@ -373,53 +379,105 @@ footer strong{color:var(--gold);font-weight:500}
 <!-- FOOD -->
 <section class="food-section">
   <div class="sec-header reveal"><p class="eyebrow">Culinary Journey</p><h2 class="sec-title">餐桌上的河內</h2><div class="gold-bar"></div></div>
-  <div class="food-masonry reveal">
-    <div class="food-tile tall">
-      <img src="https://images.unsplash.com/photo-1641440615059-42c8ed3af8c8?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Bún Chả</span></div>
+  <div class="food-slideshow reveal" id="foodSlideshow">
+    <div class="food-slide active">
+      <img src="https://images.unsplash.com/photo-1641440615059-42c8ed3af8c8?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Bún Chả</span>
+        <span class="food-slide-num">01 / 11</span>
+      </div>
     </div>
-    <div class="food-tile short">
-      <img src="https://images.unsplash.com/photo-1715925717150-2a6d181d8846?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Cà Phê Trứng</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1715925717150-2a6d181d8846?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Cà Phê Trứng</span>
+        <span class="food-slide-num">02 / 11</span>
+      </div>
     </div>
-    <div class="food-tile med">
-      <img src="https://images.unsplash.com/photo-1656945843375-207bb6e47750?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Bánh Mì</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1622087250339-9295c9ef442b?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Phở</span>
+        <span class="food-slide-num">03 / 11</span>
+      </div>
     </div>
-    <div class="food-tile tall">
-      <img src="https://images.unsplash.com/photo-1622087250339-9295c9ef442b?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Phở</span></div>
+    <div class="food-slide">
+      <img src="https://plus.unsplash.com/premium_photo-1694714103696-25e10d1b907e?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Nem Rán</span>
+        <span class="food-slide-num">04 / 11</span>
+      </div>
     </div>
-    <div class="food-tile short">
-      <img src="https://plus.unsplash.com/premium_photo-1694714103696-25e10d1b907e?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Nem Rán</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1656945843375-207bb6e47750?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Bánh Mì</span>
+        <span class="food-slide-num">05 / 11</span>
+      </div>
     </div>
-    <div class="food-tile med">
-      <img src="https://images.unsplash.com/photo-1656296995344-967dc66a8e0e?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Bún Bò</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1656296995344-967dc66a8e0e?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Bún Bò</span>
+        <span class="food-slide-num">06 / 11</span>
+      </div>
     </div>
-    <div class="food-tile tall">
-      <img src="https://plus.unsplash.com/premium_photo-1695936034221-5cd3e2064d10?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Chả Cá Lã Vọng</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1559122180-938fdf546b58?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Bánh Cuốn</span>
+        <span class="food-slide-num">07 / 11</span>
+      </div>
     </div>
-    <div class="food-tile short">
-      <img src="https://images.unsplash.com/photo-1559122180-938fdf546b58?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Bánh Cuốn</span></div>
+    <div class="food-slide">
+      <img src="https://plus.unsplash.com/premium_photo-1695936034221-5cd3e2064d10?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Chả Cá Lã Vọng</span>
+        <span class="food-slide-num">08 / 11</span>
+      </div>
     </div>
-    <div class="food-tile med">
-      <img src="https://plus.unsplash.com/premium_photo-1695936033873-eff9451fbb4d?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Cà Phê Dừa</span></div>
+    <div class="food-slide">
+      <img src="https://plus.unsplash.com/premium_photo-1695936033873-eff9451fbb4d?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Cà Phê Dừa</span>
+        <span class="food-slide-num">09 / 11</span>
+      </div>
     </div>
-    <div class="food-tile short">
-      <img src="https://images.unsplash.com/photo-1716118551152-f4287b99beb7?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Street Food</span></div>
+    <div class="food-slide">
+      <img src="https://images.unsplash.com/photo-1716118551152-f4287b99beb7?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Street Food</span>
+        <span class="food-slide-num">10 / 11</span>
+      </div>
     </div>
-    <div class="food-tile med">
-      <img src="https://plus.unsplash.com/premium_photo-1712758600710-acfd3b5f5539?q=80&w=600&auto=format&fit=crop" alt="" loading="lazy">
-      <div class="food-tile-label"><span class="food-tile-name">Bún Bò Huế</span></div>
+    <div class="food-slide">
+      <img src="https://plus.unsplash.com/premium_photo-1712758600710-acfd3b5f5539?q=80&w=900&auto=format&fit=crop" alt="" loading="lazy">
+      <div class="food-slide-overlay"></div>
+      <div class="food-slide-caption">
+        <span class="food-slide-viet">Bún Bò Huế</span>
+        <span class="food-slide-num">11 / 11</span>
+      </div>
+    </div>
+  </div>
+  <div class="food-nav reveal">
+    <div class="food-dots" id="foodDots"></div>
+    <div class="food-arrows">
+      <button class="food-arrow" onclick="foodNav(-1)">‹</button>
+      <button class="food-arrow" onclick="foodNav(1)">›</button>
     </div>
   </div>
 </section>
+
 
 <!-- BUDGET -->
 <section class="budget-section">
@@ -460,6 +518,39 @@ const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.targe
 document.querySelectorAll('.reveal,.day-block').forEach(el=>ro.observe(el));
 function toggleDay(id){document.getElementById(id).classList.toggle('open')}
 function toggleCity(id){document.getElementById(id).classList.toggle('open')}
+
+// Food slideshow
+const slides = document.querySelectorAll('.food-slide');
+const dotsEl = document.getElementById('foodDots');
+let current = 0, autoTimer;
+
+slides.forEach((_,i)=>{
+  const d = document.createElement('button');
+  d.className = 'food-dot' + (i===0?' active':'');
+  d.onclick = ()=>goSlide(i);
+  dotsEl.appendChild(d);
+});
+
+function goSlide(n){
+  slides[current].classList.remove('active');
+  dotsEl.children[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dotsEl.children[current].classList.add('active');
+  resetAuto();
+}
+function foodNav(dir){ goSlide(current + dir); }
+function resetAuto(){ clearInterval(autoTimer); autoTimer = setInterval(()=>goSlide(current+1), 4000); }
+resetAuto();
+
+// Touch swipe
+const ss = document.getElementById('foodSlideshow');
+let tx=0;
+ss.addEventListener('touchstart', e=>{ tx=e.touches[0].clientX; }, {passive:true});
+ss.addEventListener('touchend', e=>{
+  const diff = tx - e.changedTouches[0].clientX;
+  if(Math.abs(diff)>40) foodNav(diff>0?1:-1);
+}, {passive:true});
 function switchHotel(i,btn){
   document.querySelectorAll('.hotel-panel').forEach((p,j)=>p.classList.toggle('active',j===i));
   document.querySelectorAll('.hotel-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
