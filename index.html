@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HANOI — 五日行程提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1A1A;--forest:#1C2B20;--gold:#C8A96E;--cream:#F5F0E8;--sage:#4A6741;--mist:#E2DDD6;--white:#FDFCFA}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);font-weight:300;line-height:1.8;overflow-x:hidden}
+
+/* HERO */
+.hero{position:relative;height:100svh;min-height:620px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1616438096679-620332ede3a2?q=80&w=1400&auto=format&fit=crop');background-size:cover;background-position:center 30%;transition:transform 8s ease;transform:scale(1.05)}
+.hero-bg.loaded{transform:scale(1)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,18,12,.15) 0%,rgba(10,18,12,.05) 30%,rgba(10,18,12,.65) 65%,rgba(10,18,12,.94) 100%)}
+.hero-content{position:relative;padding:0 28px 52px}
+.hero-eyebrow{font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;opacity:0;transform:translateY(10px);transition:all .8s ease .2s}
+.hero-fr{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(245,240,232,.45);margin-bottom:6px;opacity:0;transform:translateY(10px);transition:all .8s ease .35s}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(72px,20vw,130px);font-weight:700;color:var(--cream);line-height:.86;letter-spacing:-.02em;margin-bottom:14px;opacity:0;transform:translateY(16px);transition:all .9s ease .5s}
+.hero-title .gold{color:var(--gold)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(245,240,232,.6);margin-bottom:28px;opacity:0;transform:translateY(10px);transition:all .8s ease .65s}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;opacity:0;transform:translateY(8px);transition:all .8s ease .8s}
+.hero-pill{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);border:1px solid rgba(245,240,232,.28);padding:6px 13px;border-radius:40px;backdrop-filter:blur(6px);background:rgba(255,255,255,.06)}
+.hero.visible .hero-eyebrow,.hero.visible .hero-fr,.hero.visible .hero-title,.hero.visible .hero-sub,.hero.visible .hero-pills{opacity:1;transform:translateY(0)}
+.scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px}
+.scroll-hint span{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.3em;color:rgba(200,169,110,.45);text-transform:uppercase}
+.scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,rgba(200,169,110,.5),transparent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* FLIGHT STRIP */
+.flight-strip{background:var(--ink);color:var(--cream);padding:18px 24px;display:flex;flex-direction:column;gap:10px}
+.flight-row{display:flex;align-items:flex-start;gap:12px}
+.flight-badge{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,169,110,.3);padding:3px 8px;flex-shrink:0;margin-top:2px}
+.flight-info{font-family:'Cormorant Garamond',serif;font-size:16px}
+.flight-info .arrow{color:var(--gold);margin:0 6px}
+.flight-time{font-family:'Inter',sans-serif;font-size:10px;color:rgba(245,240,232,.38)}
+
+/* SECTION HEADERS */
+.sec-header{padding:52px 24px 0}
+.eyebrow{font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,7vw,46px);font-weight:600;line-height:1.1;margin-bottom:14px;color:var(--ink)}
+.sec-title.light{color:var(--cream)}
+.gold-bar{width:36px;height:2px;background:var(--gold);margin-bottom:32px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ITINERARY */
+.itinerary-section{background:var(--cream);padding-bottom:52px}
+.day-block{opacity:0;transform:translateY(20px);transition:all .6s ease;margin-bottom:3px}
+.day-block.visible{opacity:1;transform:translateY(0)}
+.day-photo-wrap{position:relative;height:210px;overflow:hidden;background:var(--forest)}
+.day-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.day-photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,18,12,.88) 0%,rgba(10,18,12,.15) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:18px 20px}
+.day-num-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.day-theme-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--cream);line-height:1.25}
+.day-theme-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(245,240,232,.45);margin-top:2px}
+.day-toggle{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;background:var(--white);border-bottom:1px solid var(--mist);cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .2s}
+.day-toggle:active{background:var(--cream)}
+.day-toggle-label{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--forest)}
+.day-toggle-icon{width:28px;height:28px;border-radius:50%;background:var(--forest);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:transform .3s ease}
+.day-card.open .day-toggle-icon{transform:rotate(90deg)}
+.day-body{background:var(--white);max-height:0;overflow:hidden;transition:max-height .45s ease}
+.day-card.open .day-body{max-height:2400px}
+.day-body-inner{padding:20px 20px 24px}
+.time-slots{display:flex;flex-direction:column;gap:18px}
+.slot{display:grid;grid-template-columns:50px 1fr;gap:0 12px}
+.slot-time{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.08em;color:var(--gold);font-weight:600;padding-top:3px}
+.slot-title{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;margin-bottom:3px}
+.slot-desc{font-size:12px;color:rgba(26,26,26,.58);line-height:1.75}
+.slot-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tag{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+.tag-food{background:rgba(200,169,110,.15);color:#A07840;border:1px solid rgba(200,169,110,.3)}
+.tag-culture{background:rgba(74,103,65,.1);color:var(--sage);border:1px solid rgba(74,103,65,.25)}
+.tag-cafe{background:rgba(232,213,196,.5);color:#8B6F5E;border:1px solid rgba(139,111,94,.2)}
+.tag-note{background:rgba(26,26,26,.05);color:rgba(26,26,26,.4);border:1px solid rgba(26,26,26,.1)}
+.tag-night{background:rgba(28,43,32,.07);color:var(--forest);border:1px solid rgba(28,43,32,.18)}
+
+/* DAY 3 */
+.day3-photos{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:210px}
+.day3-photo{position:relative;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.day3-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease,filter .3s ease;filter:brightness(.55)}
+.day3-photo.selected img{filter:brightness(.85);transform:scale(1.04)}
+.day3-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,18,12,.8),transparent 60%)}
+.day3-caption{position:absolute;bottom:12px;left:12px}
+.day3-opt-label{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.day3-opt-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--cream)}
+.day3-ring{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;transition:all .25s ease}
+.day3-photo.selected .day3-ring{background:var(--gold);border-color:var(--gold)}
+.day3-check{color:#fff;font-size:11px;opacity:0;transition:opacity .2s}
+.day3-photo.selected .day3-check{opacity:1}
+.day3-tab-bar{display:flex;background:var(--white);border-bottom:1px solid var(--mist)}
+.day3-tab{flex:1;padding:12px 8px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;background:transparent;cursor:pointer;color:rgba(26,26,26,.35);border-bottom:2px solid transparent;transition:all .25s ease;-webkit-tap-highlight-color:transparent}
+.day3-tab.active{color:var(--forest);border-bottom-color:var(--gold)}
+.option-panel{display:none}
+.option-panel.active{display:block}
+.option-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.option-pill{font-family:'Inter',sans-serif;font-size:10px;padding:5px 11px;border:1px solid var(--mist);color:rgba(26,26,26,.5);border-radius:20px}
+
+/* HOTEL */
+.hotel-section{background:var(--forest);padding-bottom:52px}
+.hotel-section .sec-header{padding-top:52px}
+.hotel-prompt{margin:0 24px 16px;display:flex;align-items:center;gap:10px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.25);padding:12px 16px}
+.hotel-prompt-icon{font-size:18px;flex-shrink:0}
+.hotel-prompt-text{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--gold)}
+.hotel-prompt-sub{font-family:'Inter',sans-serif;font-size:10px;color:rgba(245,240,232,.4);margin-top:1px}
+.hotel-tabs{display:flex;overflow-x:auto;gap:0;margin:0 24px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none;border:1px solid rgba(200,169,110,.2)}
+.hotel-tabs::-webkit-scrollbar{display:none}
+.hotel-tab{flex:1;min-width:0;padding:14px 10px;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:none;background:rgba(245,240,232,.04);color:rgba(245,240,232,.3);cursor:pointer;border-right:1px solid rgba(200,169,110,.15);transition:all .25s ease;white-space:nowrap;position:relative;-webkit-tap-highlight-color:transparent}
+.hotel-tab:last-child{border-right:none}
+.hotel-tab.active{background:rgba(200,169,110,.15);color:var(--gold)}
+.hotel-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold)}
+.hotel-tab-num{display:block;font-size:7px;letter-spacing:.1em;color:rgba(200,169,110,.4);margin-bottom:2px}
+.hotel-tab.active .hotel-tab-num{color:rgba(200,169,110,.7)}
+.hotel-panel{display:none;padding:0 24px}
+.hotel-panel.active{display:block}
+.hotel-card{border:1px solid rgba(200,169,110,.18);overflow:hidden;background:rgba(245,240,232,.03)}
+.hotel-img{height:200px;overflow:hidden}
+.hotel-img img{width:100%;height:100%;object-fit:cover;display:block}
+.hotel-body{padding:22px}
+.hotel-tier{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.hotel-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:3px}
+.hotel-loc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(245,240,232,.32);margin-bottom:10px}
+.hotel-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.hotel-stars{color:var(--gold);font-size:12px}
+.hotel-rating-text{font-family:'Inter',sans-serif;font-size:10px;color:rgba(245,240,232,.38)}
+.hotel-desc{font-size:13px;color:rgba(245,240,232,.58);line-height:1.8;margin-bottom:18px}
+.hotel-feats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.hotel-feat{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.32);border:1px solid rgba(245,240,232,.1);padding:3px 8px}
+.hotel-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold)}
+.hotel-price-note{font-family:'Inter',sans-serif;font-size:10px;color:rgba(245,240,232,.28);margin-left:4px;font-weight:300}
+
+/* FOOD */
+.food-section{background:var(--white);padding-bottom:52px}
+.food-scroll-hint{display:flex;align-items:center;gap:6px;margin:0 24px 12px;font-family:'Inter',sans-serif;font-size:10px;color:rgba(26,26,26,.35);letter-spacing:.05em}
+.food-scroll-hint::before{content:'← →';font-size:12px;color:var(--gold)}
+.food-scroll{display:flex;gap:14px;overflow-x:auto;padding:0 24px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.food-scroll::-webkit-scrollbar{display:none}
+.food-card{flex-shrink:0;width:220px}
+.food-img{height:150px;overflow:hidden;margin-bottom:14px;background:var(--mist);display:flex;align-items:center;justify-content:center}
+.food-img img{width:100%;height:100%;object-fit:cover;display:block}
+.food-day{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.food-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.food-viet{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(26,26,26,.35);margin-bottom:7px}
+.food-desc{font-size:12px;color:rgba(26,26,26,.55);line-height:1.7}
+
+/* BUDGET */
+.budget-section{background:var(--cream);padding-bottom:0}
+.budget-list{margin:0 24px;border-top:1px solid var(--mist)}
+.budget-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--mist)}
+.budget-label{font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink)}
+.budget-sub{font-family:'Inter',sans-serif;font-size:10px;color:rgba(26,26,26,.38);margin-top:1px}
+.budget-amt{text-align:right}
+.budget-num{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--forest)}
+.budget-unit{font-family:'Inter',sans-serif;font-size:9px;color:rgba(26,26,26,.35)}
+.budget-total{background:var(--forest);padding:28px 24px}
+.budget-total-label{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,240,232,.38);margin-bottom:8px}
+.budget-total-num{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);margin-bottom:4px}
+.budget-total-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(245,240,232,.32)}
+
+/* TIPS */
+.tips-section{background:var(--white);padding:52px 0;border-top:1px solid var(--mist)}
+.tips-inner{padding:0 24px}
+.tips-grid{margin-top:28px;display:flex;flex-direction:column;gap:16px}
+.tip-block{padding:20px;background:var(--cream);border-left:2px solid var(--gold)}
+.tip-icon{font-size:20px;margin-bottom:6px}
+.tip-eyebrow{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.tip-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--forest);margin-bottom:7px}
+.tip-text{font-size:13px;color:rgba(26,26,26,.6);line-height:1.8}
+
+/* FOOTER */
+.footer-visual{position:relative;height:200px;overflow:hidden}
+.footer-visual img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.45)}
+.footer-visual-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.footer-visual-text h3{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:var(--cream);margin-bottom:4px}
+.footer-visual-text p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(245,240,232,.45)}
+footer{background:var(--ink);padding:24px;text-align:center;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(245,240,232,.28)}
+footer strong{color:var(--gold);font-weight:500}
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Journey Proposal · 旅行提案</p>
+    <p class="hero-fr">Entre l'ancien et le nouveau</p>
+    <h1 class="hero-title">HA<span class="gold">NOI</span></h1>
+    <p class="hero-sub">河內 — 五日輕旅行</p>
+    <div class="hero-pills">
+      <span class="hero-pill">5 Days</span>
+      <span class="hero-pill">2 People</span>
+      <span class="hero-pill">9 月出發</span>
+      <span class="hero-pill">老城區為基地</span>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<div class="flight-strip">
+  <div class="flight-row"><span class="flight-badge">去程</span><div><div class="flight-info">TPE <span class="arrow">→</span> HAN</div><div class="flight-time">07:30 出發 · 08:30 抵達（當地時間）</div></div></div>
+  <div class="flight-row"><span class="flight-badge">回程</span><div><div class="flight-info">HAN <span class="arrow">→</span> TPE</div><div class="flight-time">17:20 出發 · ⚠️ 最晚 15:30 進機場</div></div></div>
+</div>
+
+<section class="itinerary-section">
+  <div class="sec-header reveal"><p class="eyebrow">Five-Day Schedule</p><h2 class="sec-title">每日行程安排</h2><div class="gold-bar"></div></div>
+
+  <!-- DAY 1 -->
+  <div class="day-block reveal"><div class="day-card open" id="day1">
+    <div class="day-photo-wrap"><img src="https://images.unsplash.com/photo-1678461863258-185d001d7a1b?q=80&w=870&auto=format&fit=crop" alt="還劍湖" loading="lazy"><div class="day-photo-overlay"><p class="day-num-label">Day 01</p><h3 class="day-theme-title">抵達 · 還劍湖 · 老城初探</h3><p class="day-theme-sub">Arrivée — Premier regard sur Hanoi</p></div></div>
+    <div class="day-toggle" onclick="toggleDay('day1')"><span class="day-toggle-label">查看行程詳情</span><div class="day-toggle-icon">›</div></div>
+    <div class="day-body"><div class="day-body-inner"><div class="time-slots">
+      <div class="slot"><span class="slot-time">08:30</span><div><p class="slot-title">抵達河內，Grab 前往飯店</p><p class="slot-desc">約 30–40 分鐘車程，先寄放行李出發探城。</p></div></div>
+      <div class="slot"><span class="slot-time">10:00</span><div><p class="slot-title">還劍湖 · 玉山祠</p><p class="slot-desc">湖邊漫步感受城市地標，看龜塔與紅橋倒影，參觀玉山祠（VND 50,000）。</p><div class="slot-tags"><span class="tag tag-culture">文化</span></div></div></div>
+      <div class="slot"><span class="slot-time">11:30</span><div><p class="slot-title">Bancông Cafe — 老宅陽台咖啡</p><p class="slot-desc">法式老宅二樓陽台，俯瞰街景。必點：椰子咖啡、蛋咖啡。</p><div class="slot-tags"><span class="tag tag-cafe">咖啡館</span></div></div></div>
+      <div class="slot"><span class="slot-time">14:00</span><div><p class="slot-title">36 條街漫遊</p><p class="slot-desc">Hàng Gai 絲綢街、Hàng Bạc 銀器街，感受千年城市格局。</p><div class="slot-tags"><span class="tag tag-culture">老城區</span></div></div></div>
+      <div class="slot"><span class="slot-time">16:30</span><div><p class="slot-title">C.O.C Legacy Specialty Coffee</p><p class="slot-desc">藏在 Hàng Bạc 小巷二樓，找到入口本身就是體驗，椰子咖啡評價極高。</p><div class="slot-tags"><span class="tag tag-cafe">精品咖啡</span></div></div></div>
+      <div class="slot"><span class="slot-time">19:00</span><div><p class="slot-title">晚餐｜Bún Chả Tạ Hà Nội</p><p class="slot-desc">Obama 訪越南時指定的烤肉米線，炭烤豬肉香氣四溢。</p><div class="slot-tags"><span class="tag tag-food">必吃</span></div></div></div>
+      <div class="slot"><span class="slot-time">21:00</span><div><p class="slot-title">Ta Hien 啤酒街</p><p class="slot-desc">塑膠小椅坐到馬路邊，一杯 Bia Hơi 生啤不到 NT$15，感受夜生活溫度。</p><div class="slot-tags"><span class="tag tag-night">夜生活</span></div></div></div>
+    </div></div></div>
+  </div></div>
+
+  <!-- DAY 2 -->
+  <div class="day-block reveal"><div class="day-card" id="day2">
+    <div class="day-photo-wrap"><img src="https://plus.unsplash.com/premium_photo-1691960159290-6f4ace6e6c4c?q=80&w=1200&auto=format&fit=crop" alt="文廟" loading="lazy"><div class="day-photo-overlay"><p class="day-num-label">Day 02</p><h3 class="day-theme-title">歷史深度日 — 陵寢 · 文廟 · 火爐監獄</h3><p class="day-theme-sub">Histoire — Entre mémoire et résilience</p></div></div>
+    <div class="day-toggle" onclick="toggleDay('day2')"><span class="day-toggle-label">查看行程詳情</span><div class="day-toggle-icon">›</div></div>
+    <div class="day-body"><div class="day-body-inner"><div class="time-slots">
+      <div class="slot"><span class="slot-time">07:30</span><div><p class="slot-title">胡志明陵寢</p><p class="slot-desc">越南最重要的政治地標，需著長褲。⚠️ 週一、五公休，開放至 11:30。</p><div class="slot-tags"><span class="tag tag-culture">歷史</span><span class="tag tag-note">注意著裝</span></div></div></div>
+      <div class="slot"><span class="slot-time">09:30</span><div><p class="slot-title">文廟 — Văn Miếu</p><p class="slot-desc">越南第一所大學，建於 1070 年，孔廟格局，五進院落。</p><div class="slot-tags"><span class="tag tag-culture">千年古蹟</span></div></div></div>
+      <div class="slot"><span class="slot-time">11:30</span><div><p class="slot-title">Hidden Gem Cafe</p><p class="slot-desc">廢棄拖拉機、輪胎改造的多層次空間，椰子咖啡與越南春捲。</p><div class="slot-tags"><span class="tag tag-cafe">設計感</span></div></div></div>
+      <div class="slot"><span class="slot-time">14:00</span><div><p class="slot-title">火爐監獄 — Hoa Lo Prison</p><p class="slot-desc">法殖民時期建造，越戰後關押美軍飛行員，有英文語音導覽，約 1.5 小時。</p><div class="slot-tags"><span class="tag tag-culture">博物館</span></div></div></div>
+      <div class="slot"><span class="slot-time">16:30</span><div><p class="slot-title">法國區 · Tenement Coffee</p><p class="slot-desc">穿過住宅小巷才能抵達的老公寓改建咖啡館，鹹咖啡是招牌。</p><div class="slot-tags"><span class="tag tag-cafe">法國區</span></div></div></div>
+      <div class="slot"><span class="slot-time">19:00</span><div><p class="slot-title">晚餐｜Chả Cá Lã Vọng</p><p class="slot-desc">桌邊現煎薑黃魚，搭配大量蒔蘿與花生，河內最獨特的餐桌體驗。</p><div class="slot-tags"><span class="tag tag-food">名物料理</span></div></div></div>
+    </div></div></div>
+  </div></div>
+
+  <!-- DAY 3 -->
+  <div class="day-block reveal"><div class="day-card open" id="day3">
+    <div class="day3-photos">
+      <div class="day3-photo selected" id="p3a" onclick="switchDay3('A')"><img src="https://images.unsplash.com/photo-1641563634844-bcda72f71221?q=80&w=800&auto=format&fit=crop" alt="下龍灣" loading="lazy"><div class="day3-overlay"></div><div class="day3-caption"><p class="day3-opt-label">Option A</p><p class="day3-opt-name">下龍灣</p></div><div class="day3-ring"><span class="day3-check">✓</span></div></div>
+      <div class="day3-photo" id="p3b" onclick="switchDay3('B')"><img src="https://images.unsplash.com/photo-1545172538-171a802bd867?q=80&w=870&auto=format&fit=crop" alt="寧平" loading="lazy"><div class="day3-overlay"></div><div class="day3-caption"><p class="day3-opt-label">Option B</p><p class="day3-opt-name">寧平</p></div><div class="day3-ring"><span class="day3-check">✓</span></div></div>
+    </div>
+    <div style="padding:12px 20px 8px;background:var(--white)"><p class="day-num-label" style="color:var(--gold)">Day 03 · 近郊一日遊</p><p style="font-size:11px;color:rgba(26,26,26,.42);font-family:'Inter',sans-serif;margin-top:2px">點選上方照片切換選項</p></div>
+    <div class="day3-tab-bar"><button class="day3-tab active" id="tab3a" onclick="switchDay3('A')">A · 下龍灣</button><button class="day3-tab" id="tab3b" onclick="switchDay3('B')">B · 寧平（陸上下龍灣）</button></div>
+    <div class="day-body" style="max-height:2000px"><div class="day-body-inner">
+      <div class="option-panel active" id="panel3a"><p style="font-size:13px;color:rgba(26,26,26,.6);line-height:1.8">世界自然遺產，數千座石灰岩島嶼從翡翠色海面升起。遊輪出海、進溶洞、搖船穿越水道，午餐含在船上。</p><div class="option-pills"><span class="option-pill">🕐 全天 12–14h</span><span class="option-pill">🚌 來回 3.5h</span><span class="option-pill">💰 USD 40–70/人</span><span class="option-pill">⚠️ 留意颱風警報</span></div></div>
+      <div class="option-panel" id="panel3b"><p style="font-size:13px;color:rgba(26,26,26,.6);line-height:1.8">陸上下龍灣之稱。搖船穿越 Tràng An 溶洞水道、古都華閭、Hang Mua 登高俯瞰稻田與石灰岩山谷。人少、景美、受颱風影響較小。</p><div class="option-pills"><span class="option-pill">🕐 約 10–12h</span><span class="option-pill">🚌 來回 2h</span><span class="option-pill">💰 USD 25–40/人</span><span class="option-pill">✅ 颱風影響較小</span></div></div>
+    </div></div>
+  </div></div>
+
+  <!-- DAY 4 -->
+  <div class="day-block reveal"><div class="day-card" id="day4">
+    <div class="day-photo-wrap"><img src="https://images.unsplash.com/photo-1731939806123-ea41fd2caed5?q=80&w=1200&auto=format&fit=crop" alt="法國區" loading="lazy"><div class="day-photo-overlay"><p class="day-num-label">Day 04</p><h3 class="day-theme-title">法國區 · 採買 · Spa · 最後晚餐</h3><p class="day-theme-sub">Douceur — La grâce de ralentir</p></div></div>
+    <div class="day-toggle" onclick="toggleDay('day4')"><span class="day-toggle-label">查看行程詳情</span><div class="day-toggle-icon">›</div></div>
+    <div class="day-body"><div class="day-body-inner"><div class="time-slots">
+      <div class="slot"><span class="slot-time">09:30</span><div><p class="slot-title">聖若瑟主教座堂 · 法國區散步</p><p class="slot-desc">哥德式建築外觀，黃牆洋房、林蔭大道，感受殖民時期遺留的城市格局。</p><div class="slot-tags"><span class="tag tag-culture">法國區</span></div></div></div>
+      <div class="slot"><span class="slot-time">11:00</span><div><p class="slot-title">Hàng Gai 絲綢街採買</p><p class="slot-desc">手工刺繡、越南漆器、絲綢製品，帶回台灣最佳伴手禮。</p><div class="slot-tags"><span class="tag tag-culture">採買</span></div></div></div>
+      <div class="slot"><span class="slot-time">13:00</span><div><p class="slot-title">午餐｜同春市場 Chợ Đồng Xuân</p><p class="slot-desc">Bánh Mì 法棍、涼拌青木瓜、甘蔗汁，邊走邊吃在地風味。</p><div class="slot-tags"><span class="tag tag-food">在地市場</span></div></div></div>
+      <div class="slot"><span class="slot-time">15:00</span><div><p class="slot-title">下午 Spa — 傳統按摩</p><p class="slot-desc">90 分鐘越式按摩約 VND 300,000–500,000（NT$400–650），一日遊後最適合的犒賞。</p><div class="slot-tags"><span class="tag tag-note">放鬆</span></div></div></div>
+      <div class="slot"><span class="slot-time">19:00</span><div><p class="slot-title">晚餐｜Nhà hàng Lam Điền</p><p class="slot-desc">法國區精緻越南料理，評價 4.9 星，適合旅程倒數第二晚的正式餐敘。</p><div class="slot-tags"><span class="tag tag-food">精緻越菜</span></div></div></div>
+      <div class="slot"><span class="slot-time">21:00</span><div><p class="slot-title">還劍湖夜景 · 週末步行街</p><p class="slot-desc">週五至週日封街，湖邊散步、街頭音樂表演，河內最美的夜晚時刻。</p><div class="slot-tags"><span class="tag tag-night">夜晚</span></div></div></div>
+    </div></div></div>
+  </div></div>
+
+  <!-- DAY 5 -->
+  <div class="day-block reveal"><div class="day-card" id="day5">
+    <div class="day-photo-wrap"><img src="https://images.unsplash.com/photo-1772333389019-45021209c85e?q=80&w=870&auto=format&fit=crop" alt="河內晨間" loading="lazy"><div class="day-photo-overlay"><p class="day-num-label">Day 05</p><h3 class="day-theme-title">最後早晨 · 返台</h3><p class="day-theme-sub">Au revoir — Jusqu'à la prochaine fois</p></div></div>
+    <div class="day-toggle" onclick="toggleDay('day5')"><span class="day-toggle-label">查看行程詳情</span><div class="day-toggle-icon">›</div></div>
+    <div class="day-body"><div class="day-body-inner"><div class="time-slots">
+      <div class="slot"><span class="slot-time">08:00</span><div><p class="slot-title">飯店早餐 · 還劍湖晨走</p><p class="slot-desc">早晨湖邊最安靜，附近居民太極拳、散步，感受河內最真實的日常。</p></div></div>
+      <div class="slot"><span class="slot-time">10:00</span><div><p class="slot-title">越南咖啡豆採買</p><p class="slot-desc">G7 即溶咖啡、腰果零食、漆器小物。老城區超市或路邊雜貨鋪價格最實惠。</p><div class="slot-tags"><span class="tag tag-note">伴手禮</span></div></div></div>
+      <div class="slot"><span class="slot-time">13:00</span><div><p class="slot-title">搭 Grab 前往機場</p><p class="slot-desc">約 40–50 分鐘車程。17:20 班機，<strong>最晚 15:30 進入機場</strong>，預留通關時間。</p><div class="slot-tags"><span class="tag tag-note">⚠️ 15:30 截止</span></div></div></div>
+    </div></div></div>
+  </div></div>
+</section>
+
+<!-- HOTEL -->
+<section class="hotel-section">
+  <div class="sec-header reveal"><p class="eyebrow">Where to Stay</p><h2 class="sec-title light">住宿提案</h2><div class="gold-bar"></div></div>
+  <div class="hotel-prompt reveal"><div class="hotel-prompt-icon">👆</div><div><p class="hotel-prompt-text">點選下方標籤切換飯店</p><p class="hotel-prompt-sub">四間均位於老城區步行範圍，依風格與預算選擇其一</p></div></div>
+  <div class="hotel-tabs reveal">
+    <button class="hotel-tab active" onclick="switchHotel(0,this)"><span class="hotel-tab-num">01</span>L'Heritage</button>
+    <button class="hotel-tab" onclick="switchHotel(1,this)"><span class="hotel-tab-num">02</span>Centraltique</button>
+    <button class="hotel-tab" onclick="switchHotel(2,this)"><span class="hotel-tab-num">03</span>La Passion</button>
+    <button class="hotel-tab" onclick="switchHotel(3,this)"><span class="hotel-tab-num">04</span>Soleil</button>
+  </div>
+  <div class="hotel-panel active" id="h0"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1706876979075-19b4c3a06906?q=80&w=800&auto=format&fit=crop" alt="L'Heritage" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Heritage · 遺產風格</p><h3 class="hotel-name">Hotel L'Heritage</h3><p class="hotel-loc">Hàng Gà Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★☆</span><span class="hotel-rating-text">4.6 · 1,400+ 則評價</span></div><p class="hotel-desc">名字本身即為「遺產」，走法式殖民風格設計。位於老城區，距還劍湖步行約 10 分鐘。有屋頂區域，早餐提供越式與西式選項。</p><div class="hotel-feats"><span class="hotel-feat">法式殖民設計</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">老城區核心</span><span class="hotel-feat">電梯</span></div><p class="hotel-price">NT$2,000–2,800<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
+  <div class="hotel-panel" id="h1"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1702119295152-c89c7c0366e0?q=80&w=800&auto=format&fit=crop" alt="Centraltique" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Homestay Style · 生活感</p><h3 class="hotel-name">Hanoi Centraltique Downtown Homestay</h3><p class="hotel-loc">Hàng Bồ Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★☆</span><span class="hotel-rating-text">4.1 · 100+ 則評價</span></div><p class="hotel-desc">法式殖民公寓原址改建，進門需穿過咖啡館——這本身就是體驗。保留老建築高挑空間，評論稱「住在河內，而非只是造訪」。建議選有陽台的高樓層房型。</p><div class="hotel-feats"><span class="hotel-feat">法式公寓原址</span><span class="hotel-feat">穿越咖啡館入住</span><span class="hotel-feat">陽台房可選</span><span class="hotel-feat">預算最友善</span></div><p class="hotel-price">NT$1,200–1,800<span class="hotel-price-note">雙人房 / 晚</span></p></div></div></div>
+  <div class="hotel-panel" id="h2"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1580313356744-6ac9eeb8ae7e?q=80&w=800&auto=format&fit=crop" alt="La Passion" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Boutique Spa · 精品 SPA</p><h3 class="hotel-name">La Passion Hanoi Hotel & Spa</h3><p class="hotel-loc">Hàng Thùng Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★★</span><span class="hotel-rating-text">4.7 · 1,073 則評價</span></div><p class="hotel-desc">老城區最受好評的精品 Spa 飯店之一。法式氛圍，服務細心，早餐口碑極佳。附設 Spa 可安排 Day 4 下午直接在飯店按摩，省去外出麻煩。</p><div class="hotel-feats"><span class="hotel-feat">內附 Spa</span><span class="hotel-feat">法式精品風格</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">服務口碑極佳</span></div><p class="hotel-price">NT$2,200–2,800<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
+  <div class="hotel-panel" id="h3"><div class="hotel-card"><div class="hotel-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAHWarwhRVZn735f_eFO1i_SoRD0LeaIQJfVBXFOBIh9WX0H79trK3aqLK5uKj7h-0N8ldtWzL1OesewQMS6-pwU8or8HBq8ZVHSMeVyboaQRzM-QzdE4JJBDRUltpayJXJFRYPk=s1360-w1360-h1020-rw" alt="Soleil" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Design Rooftop · 設計感</p><h3 class="hotel-name">Soleil Boutique Hotel</h3><p class="hotel-loc">Hàng Bông Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★★</span><span class="hotel-rating-text">4.8 · 1,106 則評價</span></div><p class="hotel-desc">黑白大理石設計貫穿全館，有屋頂泳池，下午回飯店泡池俯瞰老城屋頂是一大亮點。評論多次提到「感覺受到皇室般的待遇」，含早餐，四間中 CP 值最高。</p><div class="hotel-feats"><span class="hotel-feat">屋頂泳池</span><span class="hotel-feat">大理石設計</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">CP 值最高</span></div><p class="hotel-price">NT$2,000–2,500<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
+</section>
+
+<!-- FOOD -->
+<section class="food-section">
+  <div class="sec-header reveal"><p class="eyebrow">Culinary Journey</p><h2 class="sec-title">餐桌上的河內</h2><div class="gold-bar"></div></div>
+  <p class="food-scroll-hint reveal">左右滑動瀏覽</p>
+  <div class="food-scroll reveal">
+    <div class="food-card"><div class="food-img"><img src="https://images.unsplash.com/photo-1527997921830-de1cf1f9b430?q=80&w=600&auto=format&fit=crop" alt="Bun Cha" loading="lazy"></div><p class="food-day">Day 1 · 晚餐</p><h4 class="food-name">烤肉米線</h4><p class="food-viet">Bún Chả</p><p class="food-desc">炭烤豬肉浸在魚露甜酸湯底，河內最具代表性的一碗。Obama 訪越南時的指定晚餐。</p></div>
+    <div class="food-card"><div class="food-img"><img src="https://images.unsplash.com/photo-1717044901429-26e91f0a8f88?q=80&w=600&auto=format&fit=crop" alt="蛋咖啡" loading="lazy"></div><p class="food-day">全程 · 咖啡文化</p><h4 class="food-name">蛋咖啡</h4><p class="food-viet">Cà Phê Trứng</p><p class="food-desc">打發蛋黃與煉乳覆蓋在濃縮咖啡上，河內獨有，口感像液態提拉米蘇。</p></div>
+    <div class="food-card"><div class="food-img"><img src="https://images.unsplash.com/photo-1677837914128-2367031a11e7?q=80&w=600&auto=format&fit=crop" alt="街頭小吃" loading="lazy"></div><p class="food-day">隨時 · 街頭</p><h4 class="food-name">街頭即食清單</h4><p class="food-viet">Street Food</p><p class="food-desc">春捲 Nem Rán、河粉 Phở、炸油條 Quẩy 沾豆漿，老城巷弄裡的日常氣味。</p></div>
+    <div class="food-card"><div class="food-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ0Lrum07SsbojDkaDi50trHye64ZMmns_BpoBXPy8Ol0GSLvwKfnWFaks&s=10" alt="香煎薑黃魚" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML+='<span style=font-size:52px>🐟</span>'"></div><p class="food-day">Day 2 · 晚餐</p><h4 class="food-name">香煎薑黃魚</h4><p class="food-viet">Chả Cá Lã Vọng</p><p class="food-desc">桌邊小鍋現煎，薑黃醃製魚排搭配大量蒔蘿與花生，餐廳超過百年歷史。</p></div>
+    <div class="food-card"><div class="food-img"><img src="https://plus.unsplash.com/premium_photo-1699555728731-70a9bf22526a?q=80&w=600&auto=format&fit=crop" alt="市場小吃" loading="lazy"></div><p class="food-day">Day 4 · 午餐</p><h4 class="food-name">市場小吃巡禮</h4><p class="food-viet">Chợ Đồng Xuân</p><p class="food-desc">法棍三明治 Bánh Mì、涼拌青木瓜、腸粉 Bánh Cuốn，走路的速度把街頭風味掃遍。</p></div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="budget-section">
+  <div class="sec-header reveal"><p class="eyebrow">Estimated Budget</p><h2 class="sec-title">旅費概估</h2><div class="gold-bar"></div></div>
+  <div class="budget-list reveal">
+    <div class="budget-row"><div><p class="budget-label">住宿 4 晚</p><p class="budget-sub">含早餐，兩人合計</p></div><div class="budget-amt"><p class="budget-num">8,000–11,000</p><p class="budget-unit">TWD</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">餐飲</p><p class="budget-sub">午晚餐 × 4 天</p></div><div class="budget-amt"><p class="budget-num">3,000–5,000</p><p class="budget-unit">TWD</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">近郊一日遊</p><p class="budget-sub">含交通、餐點</p></div><div class="budget-amt"><p class="budget-num">2,500–4,500</p><p class="budget-unit">TWD</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">Spa × 2 人</p><p class="budget-sub">90 分鐘傳統按摩</p></div><div class="budget-amt"><p class="budget-num">800–1,300</p><p class="budget-unit">TWD</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">市區交通</p><p class="budget-sub">Grab 含機場往返</p></div><div class="budget-amt"><p class="budget-num">800–1,200</p><p class="budget-unit">TWD</p></div></div>
+  </div>
+  <div class="budget-total"><p class="budget-total-label">Total · 不含機票</p><p class="budget-total-num">NT$ 15,000 — 23,000</p><p class="budget-total-note">兩人合計 · 依飯店選擇而異</p></div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section">
+  <div class="tips-inner">
+    <p class="eyebrow reveal">Good to Know</p><h2 class="sec-title reveal">旅行小提示</h2><div class="gold-bar reveal"></div>
+    <div class="tips-grid">
+      <div class="tip-block reveal"><div class="tip-icon">🌧️</div><p class="tip-eyebrow">Weather · 九月天氣</p><h4 class="tip-title">雨季但不礙事</h4><p class="tip-text">9 月約 22 天有雨，但多為短暫午後雷陣雨，非整日傾盆。早晨安排戶外，一把折疊傘足矣。氣溫 26–32°C，棉麻透氣衣物為主。</p></div>
+      <div class="tip-block reveal"><div class="tip-icon">🛵</div><p class="tip-eyebrow">Transport · 交通</p><h4 class="tip-title">Grab 是最佳夥伴</h4><p class="tip-text">全程以 Grab 為主要交通工具，安全、計費透明、司機評價可查。老城區巷弄窄，景點間多以步行為主。避免路邊攔計程車。</p></div>
+      <div class="tip-block reveal"><div class="tip-icon">💴</div><p class="tip-eyebrow">Money · 金錢</p><h4 class="tip-title">現金為王</h4><p class="tip-text">越南盾為主，街頭小吃、按摩、市場均需現金。建議台灣先換好，或抵達機場後在 Agribank ATM 提款。1 TWD ≈ 750–800 VND。</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-visual"><img src="https://images.unsplash.com/photo-1676836442965-ebffc4b52472?q=80&w=1400&auto=format&fit=crop" alt="河內" loading="lazy"><div class="footer-visual-text"><h3>À bientôt, Hanoi</h3><p>直到下次相遇</p></div></div>
+<footer><p><strong>HANOI · 河內</strong> &nbsp;—&nbsp; 五日行程提案 &nbsp;·&nbsp; September 2026</p><p style="margin-top:5px;font-size:8px">實際票價與飯店費用依訂購時間而異，建議提前 6–8 週預訂。</p></footer>
+
+<script>
+window.addEventListener('load',()=>{
+  document.getElementById('heroBg').classList.add('loaded');
+  setTimeout(()=>document.getElementById('hero').classList.add('visible'),200);
+});
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');ro.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal,.day-block').forEach(el=>ro.observe(el));
+function toggleDay(id){document.getElementById(id).classList.toggle('open')}
+function switchHotel(i,btn){
+  document.querySelectorAll('.hotel-panel').forEach((p,j)=>p.classList.toggle('active',j===i));
+  document.querySelectorAll('.hotel-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+}
+function switchDay3(opt){
+  const a=opt==='A';
+  document.getElementById('p3a').classList.toggle('selected',a);
+  document.getElementById('p3b').classList.toggle('selected',!a);
+  document.getElementById('tab3a').classList.toggle('active',a);
+  document.getElementById('tab3b').classList.toggle('active',!a);
+  document.getElementById('panel3a').classList.toggle('active',a);
+  document.getElementById('panel3b').classList.toggle('active',!a);
+}
+</script>
+</body>
+</html>
