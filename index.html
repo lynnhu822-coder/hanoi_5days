@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HANOI — 五日行程提案</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--ink:#1A1A1A;--forest:#1C2B20;--gold:#C8A96E;--cream:#F5F0E8;--sage:#4A6741;--mist:#E2DDD6;--white:#FDFCFA}
@@ -70,8 +70,8 @@ body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);
 .time-slots{display:flex;flex-direction:column;gap:18px}
 .slot{display:grid;grid-template-columns:50px 1fr;gap:0 12px}
 .slot-time{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.08em;color:var(--gold);font-weight:600;padding-top:3px}
-.slot-title{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;margin-bottom:3px}
-.slot-desc{font-size:12px;color:rgba(26,26,26,.58);line-height:1.75}
+.slot-title{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500;margin-bottom:3px}
+.slot-desc{font-size:14px;color:rgba(26,26,26,.58);line-height:1.8}
 .slot-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .tag{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
 .tag-food{background:rgba(200,169,110,.15);color:#A07840;border:1px solid rgba(200,169,110,.3)}
@@ -128,7 +128,7 @@ body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);
 .hotel-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px}
 .hotel-stars{color:var(--gold);font-size:12px}
 .hotel-rating-text{font-family:'Inter',sans-serif;font-size:10px;color:rgba(245,240,232,.38)}
-.hotel-desc{font-size:13px;color:rgba(245,240,232,.58);line-height:1.8;margin-bottom:18px}
+.hotel-desc{font-size:14px;color:rgba(245,240,232,.58);line-height:1.8;margin-bottom:18px}
 .hotel-feats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
 .hotel-feat{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.32);border:1px solid rgba(245,240,232,.1);padding:3px 8px}
 .hotel-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold)}
@@ -146,7 +146,7 @@ body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);
 .food-day{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
 .food-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px}
 .food-viet{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(26,26,26,.35);margin-bottom:7px}
-.food-desc{font-size:12px;color:rgba(26,26,26,.55);line-height:1.7}
+.food-desc{font-size:14px;color:rgba(26,26,26,.55);line-height:1.75}
 
 /* BUDGET */
 .budget-section{background:var(--cream);padding-bottom:0}
@@ -180,6 +180,27 @@ body{font-family:'Noto Serif TC',serif;background:var(--white);color:var(--ink);
 .footer-visual-text p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(245,240,232,.45)}
 footer{background:var(--ink);padding:24px;text-align:center;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.18em;color:rgba(245,240,232,.28)}
 footer strong{color:var(--gold);font-weight:500}
+.city-section{background:var(--forest);padding:60px 0 52px}
+.city-inner{padding:0 24px}
+.city-quote{margin-bottom:36px}
+.city-quote-line1{font-family:'Ma Shan Zheng',cursive;font-size:clamp(20px,5.5vw,30px);color:var(--cream);line-height:1.6;display:block;margin-bottom:4px}
+.city-quote-line2{font-family:'Ma Shan Zheng',cursive;font-size:clamp(20px,5.5vw,30px);color:var(--gold);line-height:1.6;display:block}
+.city-cards{display:flex;flex-direction:column;gap:2px;margin-top:28px}
+.city-card{border:1px solid rgba(200,169,110,.18);overflow:hidden}
+.city-card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent;background:rgba(245,240,232,.04);transition:background .2s}
+.city-card-header:active{background:rgba(200,169,110,.1)}
+.city-card-left{display:flex;align-items:center;gap:12px}
+.city-card-icon{font-size:18px;flex-shrink:0}
+.city-card-keyword{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--cream);line-height:1.2}
+.city-card-keyword-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(245,240,232,.32);display:block;margin-top:2px}
+.city-card-arrow{width:24px;height:24px;border-radius:50%;border:1px solid rgba(200,169,110,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;flex-shrink:0;transition:transform .3s ease}
+.city-card.open .city-card-arrow{transform:rotate(90deg)}
+.city-card-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.city-card.open .city-card-body{max-height:400px}
+.city-card-body-inner{padding:16px 18px 20px;border-top:1px solid rgba(200,169,110,.1)}
+.city-stat{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);display:block;margin-bottom:2px}
+.city-stat-label{font-family:'Inter',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.3);display:block;margin-bottom:12px}
+.city-card-text{font-size:14px;color:rgba(245,240,232,.6);line-height:1.85}
 </style>
 </head>
 <body>
@@ -206,6 +227,61 @@ footer strong{color:var(--gold);font-weight:500}
   <div class="flight-row"><span class="flight-badge">去程</span><div><div class="flight-info">TPE <span class="arrow">→</span> HAN</div><div class="flight-time">07:30 出發 · 08:30 抵達（當地時間）</div></div></div>
   <div class="flight-row"><span class="flight-badge">回程</span><div><div class="flight-info">HAN <span class="arrow">→</span> TPE</div><div class="flight-time">17:20 出發 · ⚠️ 最晚 15:30 進機場</div></div></div>
 </div>
+
+<section class="city-section">
+  <div class="city-inner">
+    <div class="city-quote reveal">
+      <span class="city-quote-line1">同一條街上，廟宇與咖啡館共存。</span>
+      <span class="city-quote-line2">一千年的歷史，用摩托車的速度前進。</span>
+    </div>
+    <p class="eyebrow reveal" style="color:var(--gold)">About Hanoi · 認識河內</p>
+    <div class="gold-bar reveal"></div>
+    <div class="city-cards reveal">
+      <div class="city-card" id="cc1">
+        <div class="city-card-header" onclick="toggleCity('cc1')">
+          <div class="city-card-left">
+            <span class="city-card-icon">🏛</span>
+            <div><p class="city-card-keyword">千年古都<span class="city-card-keyword-en">A Thousand-Year Capital</span></p></div>
+          </div>
+          <div class="city-card-arrow">›</div>
+        </div>
+        <div class="city-card-body"><div class="city-card-body-inner">
+          <span class="city-stat">1,010 年</span>
+          <span class="city-stat-label">建城至今</span>
+          <p class="city-card-text">李朝定都於此，36 條街的格局延續至今，每條街以行業命名——銀器街、絲綢街、紙張街。這是東南亞保存最完整的古城街道系統之一，千年後依然有人在同一個位置做同一門生意。</p>
+        </div></div>
+      </div>
+      <div class="city-card" id="cc2">
+        <div class="city-card-header" onclick="toggleCity('cc2')">
+          <div class="city-card-left">
+            <span class="city-card-icon">🇫🇷</span>
+            <div><p class="city-card-keyword">法式印記<span class="city-card-keyword-en">French Indochina Legacy</span></p></div>
+          </div>
+          <div class="city-card-arrow">›</div>
+        </div>
+        <div class="city-card-body"><div class="city-card-body-inner">
+          <span class="city-stat">1902–1954</span>
+          <span class="city-stat-label">法國殖民時期</span>
+          <p class="city-card-text">歌劇院、黃色洋房、林蔭大道——法殖民時期在河內留下了整個城區的建築遺產。這些建築沒有被拆除，而是與古廟並存，形成河內獨有的雙重城市景觀：走出廟宇，轉角就是咖啡館。</p>
+        </div></div>
+      </div>
+      <div class="city-card" id="cc3">
+        <div class="city-card-header" onclick="toggleCity('cc3')">
+          <div class="city-card-left">
+            <span class="city-card-icon">☕</span>
+            <div><p class="city-card-keyword">咖啡文化<span class="city-card-keyword-en">The Coffee Culture</span></p></div>
+          </div>
+          <div class="city-card-arrow">›</div>
+        </div>
+        <div class="city-card-body"><div class="city-card-body-inner">
+          <span class="city-stat"># 2</span>
+          <span class="city-stat-label">全球咖啡出口國排名</span>
+          <p class="city-card-text">越南是全球第二大咖啡出口國，而河內更發展出本地獨有的咖啡形式：蛋咖啡、椰子咖啡、路邊塑膠椅文化。一杯咖啡不只是飲料，是感受這座城市溫度最直接的方式。</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="itinerary-section">
   <div class="sec-header reveal"><p class="eyebrow">Five-Day Schedule</p><h2 class="sec-title">每日行程安排</h2><div class="gold-bar"></div></div>
@@ -290,7 +366,7 @@ footer strong{color:var(--gold);font-weight:500}
     <button class="hotel-tab" onclick="switchHotel(3,this)"><span class="hotel-tab-num">04</span>Soleil</button>
   </div>
   <div class="hotel-panel active" id="h0"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1706876979075-19b4c3a06906?q=80&w=800&auto=format&fit=crop" alt="L'Heritage" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Heritage · 遺產風格</p><h3 class="hotel-name">Hotel L'Heritage</h3><p class="hotel-loc">Hàng Gà Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★☆</span><span class="hotel-rating-text">4.6 · 1,400+ 則評價</span></div><p class="hotel-desc">名字本身即為「遺產」，走法式殖民風格設計。位於老城區，距還劍湖步行約 10 分鐘。有屋頂區域，早餐提供越式與西式選項。</p><div class="hotel-feats"><span class="hotel-feat">法式殖民設計</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">老城區核心</span><span class="hotel-feat">電梯</span></div><p class="hotel-price">NT$2,000–2,800<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
-  <div class="hotel-panel" id="h1"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1702119295152-c89c7c0366e0?q=80&w=800&auto=format&fit=crop" alt="Centraltique" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Homestay Style · 生活感</p><h3 class="hotel-name">Hanoi Centraltique Downtown Homestay</h3><p class="hotel-loc">Hàng Bồ Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★☆</span><span class="hotel-rating-text">4.1 · 100+ 則評價</span></div><p class="hotel-desc">法式殖民公寓原址改建，進門需穿過咖啡館——這本身就是體驗。保留老建築高挑空間，評論稱「住在河內，而非只是造訪」。建議選有陽台的高樓層房型。</p><div class="hotel-feats"><span class="hotel-feat">法式公寓原址</span><span class="hotel-feat">穿越咖啡館入住</span><span class="hotel-feat">陽台房可選</span><span class="hotel-feat">預算最友善</span></div><p class="hotel-price">NT$1,200–1,800<span class="hotel-price-note">雙人房 / 晚</span></p></div></div></div>
+  <div class="hotel-panel" id="h1"><div class="hotel-card"><div class="hotel-img"><img src="https://res.klook.com/klook-hotel/image/upload/fl_lossy.progressive,w_1200,h_800,c_fill,q_85/agodahotel/8639275/-1/fa323959243f4d3e7ea2656af4bcbe90.jpg" alt="Centraltique" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Homestay Style · 生活感</p><h3 class="hotel-name">Hanoi Centraltique Downtown Homestay</h3><p class="hotel-loc">Hàng Bồ Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★☆</span><span class="hotel-rating-text">4.1 · 100+ 則評價</span></div><p class="hotel-desc">法式殖民公寓原址改建，進門需穿過咖啡館——這本身就是體驗。保留老建築高挑空間，評論稱「住在河內，而非只是造訪」。建議選有陽台的高樓層房型。</p><div class="hotel-feats"><span class="hotel-feat">法式公寓原址</span><span class="hotel-feat">穿越咖啡館入住</span><span class="hotel-feat">陽台房可選</span><span class="hotel-feat">預算最友善</span></div><p class="hotel-price">NT$1,200–1,800<span class="hotel-price-note">雙人房 / 晚</span></p></div></div></div>
   <div class="hotel-panel" id="h2"><div class="hotel-card"><div class="hotel-img"><img src="https://images.unsplash.com/photo-1580313356744-6ac9eeb8ae7e?q=80&w=800&auto=format&fit=crop" alt="La Passion" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Boutique Spa · 精品 SPA</p><h3 class="hotel-name">La Passion Hanoi Hotel & Spa</h3><p class="hotel-loc">Hàng Thùng Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★★</span><span class="hotel-rating-text">4.7 · 1,073 則評價</span></div><p class="hotel-desc">老城區最受好評的精品 Spa 飯店之一。法式氛圍，服務細心，早餐口碑極佳。附設 Spa 可安排 Day 4 下午直接在飯店按摩，省去外出麻煩。</p><div class="hotel-feats"><span class="hotel-feat">內附 Spa</span><span class="hotel-feat">法式精品風格</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">服務口碑極佳</span></div><p class="hotel-price">NT$2,200–2,800<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
   <div class="hotel-panel" id="h3"><div class="hotel-card"><div class="hotel-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAHWarwhRVZn735f_eFO1i_SoRD0LeaIQJfVBXFOBIh9WX0H79trK3aqLK5uKj7h-0N8ldtWzL1OesewQMS6-pwU8or8HBq8ZVHSMeVyboaQRzM-QzdE4JJBDRUltpayJXJFRYPk=s1360-w1360-h1020-rw" alt="Soleil" loading="lazy"></div><div class="hotel-body"><p class="hotel-tier">Design Rooftop · 設計感</p><h3 class="hotel-name">Soleil Boutique Hotel</h3><p class="hotel-loc">Hàng Bông Street, Old Quarter</p><div class="hotel-rating"><span class="hotel-stars">★★★★★</span><span class="hotel-rating-text">4.8 · 1,106 則評價</span></div><p class="hotel-desc">黑白大理石設計貫穿全館，有屋頂泳池，下午回飯店泡池俯瞰老城屋頂是一大亮點。評論多次提到「感覺受到皇室般的待遇」，含早餐，四間中 CP 值最高。</p><div class="hotel-feats"><span class="hotel-feat">屋頂泳池</span><span class="hotel-feat">大理石設計</span><span class="hotel-feat">含早餐</span><span class="hotel-feat">CP 值最高</span></div><p class="hotel-price">NT$2,000–2,500<span class="hotel-price-note">雙人房 / 晚，含早餐</span></p></div></div></div>
 </section>
@@ -311,14 +387,16 @@ footer strong{color:var(--gold);font-weight:500}
 <!-- BUDGET -->
 <section class="budget-section">
   <div class="sec-header reveal"><p class="eyebrow">Estimated Budget</p><h2 class="sec-title">旅費概估</h2><div class="gold-bar"></div></div>
+  <p style="font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.15em;color:rgba(26,26,26,.4);margin:0 24px 0;padding-bottom:4px;">以下為每人費用</p>
   <div class="budget-list reveal">
-    <div class="budget-row"><div><p class="budget-label">住宿 4 晚</p><p class="budget-sub">含早餐，兩人合計</p></div><div class="budget-amt"><p class="budget-num">8,000–11,000</p><p class="budget-unit">TWD</p></div></div>
-    <div class="budget-row"><div><p class="budget-label">餐飲</p><p class="budget-sub">午晚餐 × 4 天</p></div><div class="budget-amt"><p class="budget-num">3,000–5,000</p><p class="budget-unit">TWD</p></div></div>
-    <div class="budget-row"><div><p class="budget-label">近郊一日遊</p><p class="budget-sub">含交通、餐點</p></div><div class="budget-amt"><p class="budget-num">2,500–4,500</p><p class="budget-unit">TWD</p></div></div>
-    <div class="budget-row"><div><p class="budget-label">Spa × 2 人</p><p class="budget-sub">90 分鐘傳統按摩</p></div><div class="budget-amt"><p class="budget-num">800–1,300</p><p class="budget-unit">TWD</p></div></div>
-    <div class="budget-row"><div><p class="budget-label">市區交通</p><p class="budget-sub">Grab 含機場往返</p></div><div class="budget-amt"><p class="budget-num">800–1,200</p><p class="budget-unit">TWD</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">✈️ 機票</p><p class="budget-sub">來回含稅</p></div><div class="budget-amt"><p class="budget-num">10,000</p><p class="budget-unit">TWD / 人</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">🏨 住宿 4 晚</p><p class="budget-sub">含早餐，均攤</p></div><div class="budget-amt"><p class="budget-num">4,000–5,500</p><p class="budget-unit">TWD / 人</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">🍜 餐飲</p><p class="budget-sub">午晚餐 × 4 天</p></div><div class="budget-amt"><p class="budget-num">1,500–2,500</p><p class="budget-unit">TWD / 人</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">🚤 近郊一日遊</p><p class="budget-sub">含交通、餐點</p></div><div class="budget-amt"><p class="budget-num">1,250–2,250</p><p class="budget-unit">TWD / 人</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">💆 Spa</p><p class="budget-sub">90 分鐘傳統按摩</p></div><div class="budget-amt"><p class="budget-num">400–650</p><p class="budget-unit">TWD / 人</p></div></div>
+    <div class="budget-row"><div><p class="budget-label">🛵 市區交通</p><p class="budget-sub">Grab 含機場往返</p></div><div class="budget-amt"><p class="budget-num">400–600</p><p class="budget-unit">TWD / 人</p></div></div>
   </div>
-  <div class="budget-total"><p class="budget-total-label">Total · 不含機票</p><p class="budget-total-num">NT$ 15,000 — 23,000</p><p class="budget-total-note">兩人合計 · 依飯店選擇而異</p></div>
+  <div class="budget-total"><p class="budget-total-label">Total per person · 每人合計</p><p class="budget-total-num">NT$ 17,550 — 21,500</p><p class="budget-total-note">每人估算 · 依飯店選擇而異</p></div>
 </section>
 
 <!-- TIPS -->
@@ -344,6 +422,7 @@ window.addEventListener('load',()=>{
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');ro.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.reveal,.day-block').forEach(el=>ro.observe(el));
 function toggleDay(id){document.getElementById(id).classList.toggle('open')}
+function toggleCity(id){document.getElementById(id).classList.toggle('open')}
 function switchHotel(i,btn){
   document.querySelectorAll('.hotel-panel').forEach((p,j)=>p.classList.toggle('active',j===i));
   document.querySelectorAll('.hotel-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
